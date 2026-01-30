@@ -5,7 +5,7 @@ use crate::storage::models::*;
 use chrono::Utc;
 use std::collections::HashMap;
 use std::sync::Arc;
-use tauri::{AppHandle, Manager, State};
+use tauri::{AppHandle, State};
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
