@@ -123,3 +123,28 @@ impl CliAdapter for ClaudeCodeAdapter {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::{ClaudeCodeAdapter, LineType};
+    use crate::adapters::CliAdapter;
+
+    #[test]
+    fn parse_assistant_json_line() {
+        let adapter = ClaudeCodeAdapter::new();
+        let line = r#"{"type":"message","role":"assistant","content":"Hello"}"#;
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "Hello");
+        assert_eq!(parsed.line_type, LineType::Json);
+        assert!(parsed.is_assistant);
+    }
+
+    #[test]
+    fn parse_non_json_line() {
+        let adapter = ClaudeCodeAdapter::new();
+        let parsed = adapter.parse_output_line("plain text");
+        assert_eq!(parsed.content, "plain text");
+        assert_eq!(parsed.line_type, LineType::Text);
+        assert!(!parsed.is_assistant);
+    }
+}

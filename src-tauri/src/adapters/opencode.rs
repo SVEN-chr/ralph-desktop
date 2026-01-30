@@ -164,7 +164,8 @@ impl CliAdapter for OpenCodeAdapter {
 
 #[cfg(test)]
 mod tests {
-    use super::OpenCodeAdapter;
+    use super::{LineType, OpenCodeAdapter};
+    use crate::adapters::CliAdapter;
 
     #[test]
     fn exec_args_include_format_json() {
@@ -179,5 +180,25 @@ mod tests {
             args,
             vec!["run", "--format", "json", "--agent", "plan", "hello"]
         );
+    }
+
+    #[test]
+    fn parse_text_event() {
+        let adapter = OpenCodeAdapter::new();
+        let line = r#"{"type":"text","part":{"type":"text","text":"Hi"}}"#;
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "Hi");
+        assert_eq!(parsed.line_type, LineType::Json);
+        assert!(parsed.is_assistant);
+    }
+
+    #[test]
+    fn parse_error_event() {
+        let adapter = OpenCodeAdapter::new();
+        let line = r#"{"type":"error","error":{"message":"boom"}}"#;
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "boom");
+        assert_eq!(parsed.line_type, LineType::Error);
+        assert!(!parsed.is_assistant);
     }
 }
