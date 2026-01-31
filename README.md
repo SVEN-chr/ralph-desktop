@@ -126,12 +126,17 @@ Download the latest release for your platform:
 
 | Platform | Download |
 |----------|----------|
-| macOS (Apple Silicon) | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| macOS (Intel) | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| Windows | [.msi](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) / [.exe](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| Linux | [.deb](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) / [.AppImage](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| macOS (Intel / Apple Silicon) | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| Windows 10/11 (64-bit) | [.exe](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| Linux (x86_64) | [.AppImage](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
 
-> **Note:** The app is not code-signed. On macOS, right-click and select "Open" to bypass Gatekeeper. On Windows, click "More info" → "Run anyway" when SmartScreen appears.
+> **Note:** The app is not code-signed. On macOS, right-click the app and select "Open", or go to System Settings → Privacy & Security → Open Anyway. On Windows, click "More info" → "Run anyway" when SmartScreen appears.
+
+**Linux AppImage (first run):**
+```bash
+chmod +x Ralph.Desktop_*.AppImage
+./Ralph.Desktop_*.AppImage
+```
 
 ---
 

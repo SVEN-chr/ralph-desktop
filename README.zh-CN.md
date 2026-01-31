@@ -124,12 +124,17 @@ Ralph Desktop 开箱即支持 12 种语言：
 
 | 平台 | 下载 |
 |------|------|
-| macOS (Apple Silicon) | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| macOS (Intel) | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| Windows | [.msi](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) / [.exe](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
-| Linux | [.deb](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) / [.AppImage](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| macOS（Intel / Apple 芯片通用） | [.dmg](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| Windows 10/11（64 位） | [.exe](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
+| Linux（x86_64） | [.AppImage](https://github.com/liuxiaopai-ai/ralph-desktop/releases/latest) |
 
-> **注意：** 应用未进行代码签名。在 macOS 上，右键点击选择"打开"以绕过 Gatekeeper。在 Windows 上，点击"更多信息" → "仍要运行"。
+> **注意：** 应用未进行代码签名。在 macOS 上，右键点击 App 选择“打开”，或进入“系统设置 → 隐私与安全性 → 仍要打开”。在 Windows 上，点击“更多信息” → “仍要运行”。
+
+**Linux AppImage（首次运行）:**
+```bash
+chmod +x Ralph.Desktop_*.AppImage
+./Ralph.Desktop_*.AppImage
+```
 
 ---
 

@@ -16,10 +16,7 @@ jobs:
         include:
           - os: macos-latest
             target: aarch64-apple-darwin
-            tauri_args: '--target aarch64-apple-darwin'
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            tauri_args: '--target x86_64-apple-darwin'
+            tauri_args: '--target universal-apple-darwin'
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             tauri_args: ''
@@ -44,6 +41,10 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
+      
+      - name: Add Rust targets for macOS universal
+        if: runner.os == 'macOS'
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -61,7 +62,32 @@ jobs:
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Ralph Desktop ${{ github.ref_name }}'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: |
+            ## Download (EN)
+            Pick the file for your OS:
+
+            - Windows 10/11 (64-bit): download `.exe` installer
+            - macOS (Intel / Apple Silicon universal): download `.dmg` installer
+            - Linux: download the only `.AppImage` (universal)
+
+            Quick install:
+            1. Download the file for your OS
+            2. Double-click to install (macOS: drag App to Applications)
+            3. macOS unsigned app: right-click the app → Open, or go to System Settings → Privacy & Security → Open Anyway
+
+            ---
+
+            ## 下载安装（中文）
+            按系统选择下载文件：
+
+            - Windows 10/11（64 位）：下载 `.exe` 安装包
+            - macOS（Intel / Apple 芯片通用）：下载 `.dmg` 安装包
+            - Linux：下载唯一的 `.AppImage`（通用）
+
+            简易安装步骤：
+            1. 下载对应文件
+            2. 双击安装（macOS 把 App 拖到 Applications）
+            3. macOS 未签名提示：右键 App → 打开，或去“系统设置 → 隐私与安全性 → 仍要打开”
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.tauri_args }}
