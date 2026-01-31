@@ -20,3 +20,8 @@ Ralph Desktop is a Tauri 2.x + Svelte 5 desktop app for orchestrating CLI coding
 
 ## Data & Storage
 - App data lives under `~/.ralph-desktop/` (config, projects, logs).
+
+## Versioning
+- Keep versions in sync across `package.json` and `src-tauri/tauri.conf.json`.
+- Use `scripts/bump-version.mjs` when updating release versions.
+
