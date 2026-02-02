@@ -236,4 +236,51 @@ mod tests {
             ]
         );
     }
+
+    #[test]
+    fn parse_output_line_extracts_agent_message_text() {
+        let adapter = CodexAdapter::new();
+        let line = r#"{"type":"item.completed","item":{"type":"agent_message","text":"Hello world"}}"#;
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "Hello world");
+        assert_eq!(parsed.line_type, super::LineType::Json);
+        assert!(parsed.is_assistant);
+    }
+
+    #[test]
+    fn parse_output_line_skips_control_events() {
+        let adapter = CodexAdapter::new();
+        for event in ["thread.started", "turn.started", "turn.completed", "item.delta"] {
+            let line = format!(r#"{{"type":"{}"}}"#, event);
+            let parsed = adapter.parse_output_line(&line);
+            assert!(parsed.content.is_empty(), "should skip {}", event);
+        }
+    }
+
+    #[test]
+    fn parse_output_line_passes_through_unknown_json() {
+        let adapter = CodexAdapter::new();
+        let line = r#"{"question":"Hi","options":[]}"#;
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, line);
+        assert_eq!(parsed.line_type, super::LineType::Text);
+    }
+
+    #[test]
+    fn parse_output_line_handles_plain_text() {
+        let adapter = CodexAdapter::new();
+        let line = "Hello world";
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "Hello world");
+        assert_eq!(parsed.line_type, super::LineType::Text);
+    }
+
+    #[test]
+    fn parse_output_line_preserves_completion_signal() {
+        let adapter = CodexAdapter::new();
+        let line = "<done>COMPLETE</done>";
+        let parsed = adapter.parse_output_line(line);
+        assert_eq!(parsed.content, "<done>COMPLETE</done>");
+        assert!(parsed.is_assistant);
+    }
 }
